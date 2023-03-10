@@ -1,52 +1,51 @@
 <template>
   <view class="content">
-    <image class="logo" src="/static/logo.png"></image>
-    <view class="text-area">
-      <text class="title">{{ title }}</text>
-    </view>
+    <!-- <camera
+     class="camera"
+      mode="normal"
+      device-position="front"
+      flash="auto"
+      @initdone = 'initdone'
+     /> -->
+    <button @click="startSoterAuthenticationFaceID">开始FaceID认证</button>
   </view>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      title: 'Hello',
+<script lang="ts" setup >
+import { ref } from "vue";
+const title = ref<string>('蔡夏柠')
+const startSoterAuthenticationFaceID = () => {
+  uni.checkIsSupportSoterAuthentication({
+    success(res) {
+      uni.showModal({
+        content: '支持的认证方式：' + res.supportMode,
+        showCancel: false
+      });
+      console.log(res);
+    },
+    fail(err) {
+      console.log(err);
     }
-  },
-  onLoad() { },
-  methods: {},
+  });
+
+}
+const initdone = (e: any) => {
+  console.log('e: ', e);
+
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.camera {
+  width: 400rpx;
+  height: 400rpx;
+  border-radius: 100%;
+}
+
 .content {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.logo {
-  height: 200rpx;
-  width: 200rpx;
-  margin-top: 200rpx;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50rpx;
-}
-
-.text-area {
-  display: flex;
-  justify-content: center;
-
-  .title {
-    color: red;
-  }
-}
-
-.title {
-  font-size: 36rpx;
-  color: #8f8f94;
 }
 </style>
