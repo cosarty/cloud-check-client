@@ -14,6 +14,9 @@
     "resolveJsonModule": true,
     "lib": ["esnext", "dom"],
     "types": ["@dcloudio/types", "vite/client"],
+    "paths": {
+      "@/*":["./src/*"]
+    }
   },
   "exclude": ["node_modules", "unpackage", "src/**/*.nvue"],
   "include": [
