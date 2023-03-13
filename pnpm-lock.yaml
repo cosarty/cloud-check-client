@@ -17,7 +17,9 @@ specifiers:
   '@dcloudio/uni-mp-weixin': 3.0.0-3061520221228001
   '@dcloudio/uni-quickapp-webview': 3.0.0-3061520221228001
   '@dcloudio/uni-stacktracey': 3.0.0-3061520221228001
+  '@dcloudio/uni-ui': ^1.4.26
   '@dcloudio/vite-plugin-uni': 3.0.0-3061520221228001
+  uview-plus: ^3.1.29
   vite: 3.2.4
   vue: ^3.2.45
   vue-i18n: ^9.1.9
@@ -35,6 +37,8 @@ dependencies:
   '@dcloudio/uni-mp-toutiao': 3.0.0-3061520221228001_vue@3.2.45
   '@dcloudio/uni-mp-weixin': 3.0.0-3061520221228001_vue@3.2.45
   '@dcloudio/uni-quickapp-webview': 3.0.0-3061520221228001_vue@3.2.45
+  '@dcloudio/uni-ui': 1.4.26
+  uview-plus: 3.1.29
   vue: 3.2.45
   vue-i18n: 9.2.2_vue@3.2.45
 
@@ -765,6 +769,10 @@ packages:
       - vue
     dev: false
 
+  /@dcloudio/uni-ui/1.4.26:
+    resolution: {integrity: sha512-JpYXNi9WEmFeTcF6EWrksrMqA0HEl76nxW/Imd0PW1qm/7TORAGSpvMmEDYrMQ3vIbRQFV+n6bhiJIWi34u/5Q==}
+    dev: false
+
   /@dcloudio/vite-plugin-uni/3.0.0-3061520221228001_vite@3.2.4+vue@3.2.45:
     resolution: {integrity: sha512-0O6aqSB1Xc5CEFZ+nws5E/v81OXao0Md9+qXLXH5oRn5+Nac38DP8SkD+slQmpHYpjSPnO3N5ZLguryJ/Fws4g==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -1255,6 +1263,14 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
 
+  /clipboard/2.0.11:
+    resolution: {integrity: sha512-C+0bbOqkezLIsmWSvlsXS0Q0bmkugu7jcfMIACB+RDEntIzQIkdr148we28AfSloQLRdZlYL/QYyrq05j/3Faw==}
+    dependencies:
+      good-listener: 1.2.2
+      select: 1.1.2
+      tiny-emitter: 2.1.0
+    dev: false
+
   /color-convert/1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
     dependencies:
@@ -1348,6 +1364,10 @@ packages:
   /csstype/2.6.21:
     resolution: {integrity: sha512-Z1PhmomIfypOpoMjRQB70jfvy/wxT50qW08YXO5lMIJkrdq4yOTR+AW7FqutScmB9NkLwxo+jU+kZLbofZZq/w==}
 
+  /dayjs/1.11.7:
+    resolution: {integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==}
+    dev: false
+
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
     peerDependencies:
@@ -1376,6 +1396,10 @@ packages:
     dependencies:
       execa: 5.1.1
     dev: true
+
+  /delegate/3.2.0:
+    resolution: {integrity: sha512-IofjkYBZaZivn0V8nnsMJGBr4jVLxHDheKSW88PyxS5QC4Vo9ZbZVvhzlSxY87fVq3STR6r+4cGepyHkcWOQSw==}
+    dev: false
 
   /depd/2.0.0:
     resolution: {integrity: sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==}
@@ -1763,6 +1787,12 @@ packages:
   /globals/11.12.0:
     resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==}
     engines: {node: '>=4'}
+
+  /good-listener/1.2.2:
+    resolution: {integrity: sha512-goW1b+d9q/HIwbVYZzZ6SsTr4IgE+WA44A0GmPIQstuOrgsFcT7VEJ48nmr9GaRtNu0XTKacFLGnBPAM6Afouw==}
+    dependencies:
+      delegate: 3.2.0
+    dev: false
 
   /graceful-fs/4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
@@ -2282,6 +2312,10 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: true
 
+  /select/1.1.2:
+    resolution: {integrity: sha512-OwpTSOfy6xSs1+pwcNrv0RBMOzI39Lp3qQKUTPVVPRjCdNa5JH/oPRiqsesIskK8TVgmRiHwO4KXlV2Li9dANA==}
+    dev: false
+
   /semver/6.3.0:
     resolution: {integrity: sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==}
     hasBin: true
@@ -2412,6 +2446,10 @@ packages:
       source-map-support: 0.5.21
     dev: true
 
+  /tiny-emitter/2.1.0:
+    resolution: {integrity: sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==}
+    dev: false
+
   /to-fast-properties/2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
     engines: {node: '>=4'}
@@ -2465,6 +2503,14 @@ packages:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
     dev: true
+
+  /uview-plus/3.1.29:
+    resolution: {integrity: sha512-yIu30IcqD41nEpCk0+uDafLAA8aC0xPW8M9mFKa3jznlRPMTko6iefzMLgztq8zU2gpOEBIQ1N5J0tn8gsdWeg==}
+    engines: {HBuilderX: ^3.1.0}
+    dependencies:
+      clipboard: 2.0.11
+      dayjs: 1.11.7
+    dev: false
 
   /vary/1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
