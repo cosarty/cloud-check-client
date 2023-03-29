@@ -1,3 +1,4 @@
+import userStore from "@/store/userStore";
 const install = () => {
   uni.$u.http.setConfig((config) => {
     /* config 为默认全局配置*/
@@ -8,10 +9,11 @@ const install = () => {
   // 请求拦截
   uni.$u.http.interceptors.request.use(
     (config) => {
-      console.log("config: ", config);
+      const user = userStore();
 
-      config.data = config.data || {};
-
+      if (user.token) {
+        config.header.Authorization = `Bearer ${user.token}`;
+      }
       return config;
     },
     (config) => {
@@ -23,13 +25,27 @@ const install = () => {
   // 响应拦截
   uni.$u.http.interceptors.response.use(
     (response) => {
-      console.log("response: ", response);
-
       const data = response.data;
 
       return data.data;
     },
     (response) => {
+      switch (response.statusCode) {
+        case 400:
+          const { error } = response.data;
+          console.log("error: ", error);
+          if (Array.isArray(error))
+            uni.showToast({ title: error[0].message, icon: "error" });
+          else {
+            uni.showToast({ title: error, icon: "error" });
+          }
+          break;
+        case 401:
+          uni.showToast({ title: "请重新登录", icon: "none" });
+          // 退出登录
+          userStore().logOut();
+          break;
+      }
       // 对响应错误做点什么 （statusCode !== 200）
       return Promise.reject(response);
     }

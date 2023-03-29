@@ -17,23 +17,35 @@
 </template>
 
 <script setup lang="ts">
-import { onReady } from "@dcloudio/uni-app";
-import { login } from "@/http/user";
-import { reactive } from "vue";
+import { onLoad, onReady } from "@dcloudio/uni-app";
+import { login } from "@/http/api";
+import { onMounted, reactive } from "vue";
+import userStore from "@/store/userStore";
 
+const user = userStore();
 const account = reactive({
   email: "414359193@qq.com",
   password: "aA123456789",
 });
-onReady(() => {
-  // uni.reLaunch({ url: "/pages/profile/profile" });
+onLoad(() => {
+  // 自动登录
+  if (uni.getStorageSync("token")) {
+    user.setToken(uni.getStorageSync("token")).then(() => {
+      uni.showToast({ icon: "none", title: "登录成功" });
+      uni.reLaunch({ url: "/pages/schedule/schedule" });
+    });
+  }
 });
 
-const submit = async () => {
-  const data = await login({ ...account });
-  console.log("data: ", data);
+// onMounted(() => {
+//   console.log(2);
+// });
 
-  uni.reLaunch({ url: "/pages/schedule/schedule" });
+const submit = async () => {
+  // 登录
+  user.regLogin(account).then(() => {
+    uni.reLaunch({ url: "/pages/schedule/schedule" });
+  });
 };
 </script>
 
