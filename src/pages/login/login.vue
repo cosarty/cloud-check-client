@@ -31,8 +31,10 @@ onLoad(() => {
   // 自动登录
   if (uni.getStorageSync("token")) {
     user.setToken(uni.getStorageSync("token")).then(() => {
-      uni.showToast({ icon: "none", title: "登录成功" });
-      uni.reLaunch({ url: "/pages/schedule/schedule" });
+      uni.showToast({ icon: "success", title: "登录成功", duration: 500 });
+      setTimeout(() => {
+        uni.reLaunch({ url: "/pages/schedule/schedule" });
+      }, 500);
     });
   }
 });
@@ -44,7 +46,10 @@ onLoad(() => {
 const submit = async () => {
   // 登录
   user.regLogin(account).then(() => {
-    uni.reLaunch({ url: "/pages/schedule/schedule" });
+    uni.showToast({ icon: "none", title: "登录成功", duration: 500 });
+    setTimeout(() => {
+      uni.reLaunch({ url: "/pages/schedule/schedule" });
+    }, 500);
   });
 };
 </script>

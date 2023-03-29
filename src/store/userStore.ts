@@ -26,15 +26,19 @@ const userStore = defineStore("user", () => {
     uni.removeStorageSync("token");
     userInfo.value = undefined;
 
-    uni.reLaunch({
-      url: "/pages/login/login",
-      success() {
-        uni.showToast({ title: "退出登录成功", duration: 1000 });
-      },
+    uni.showToast({
+      title: "退出登录成功",
+      duration: 500,
+      icon: "none",
     });
+    setTimeout(() => {
+      uni.reLaunch({
+        url: "/pages/login/login",
+      });
+    }, 500);
   };
 
-  return { token, regLogin, logOut, getCurrentUser, setToken };
+  return { token, regLogin, logOut, getCurrentUser, setToken, userInfo };
 });
 
 export default userStore;
