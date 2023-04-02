@@ -13,6 +13,7 @@
     >
       {{ info }}
       <u-button @click="entery" type="primary"> 人脸录入</u-button>
+      <u-button @click="compara" type="primary"> 人脸检测</u-button>
     </scroll-view>
     <u-button @click="user.logOut()" type="primary"> 退出登录</u-button>
   </div>
@@ -46,6 +47,9 @@ const entery = () => {
   uni.navigateTo({ url: "/pages/face-entery/face-entery" });
 };
 
+const compara = () => {
+  uni.navigateTo({ url: "/pages/compare-face/compare-face" });
+};
 const onRestore = () => {
   triggered.value = false;
 };

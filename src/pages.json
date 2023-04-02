@@ -23,6 +23,12 @@
       "style": {
         "navigationBarTitleText": "人脸录入"
       }
+    },
+    {
+      "path": "pages/compare-face/compare-face",
+      "style": {
+        "navigationBarTitleText": "人脸检测"
+      }
     }
   ],
   "tabBar": {

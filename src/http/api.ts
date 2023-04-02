@@ -10,3 +10,7 @@ export const getTaskList = (id: any) => http.get(`/singTask/getTask/${id}`);
 // 人脸活体检测
 export const detectLivingFace = (params: any) =>
   http.post(`/face/detectLivingFace`, params);
+
+// 校验
+export const compareFace = (params: any) =>
+  http.post(`/face/compareFace`, params);

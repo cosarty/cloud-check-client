@@ -34,21 +34,16 @@
     </view>
 
     <view class="tip"
-      ><text v-if="isSuccsess" class="scu-text">获取成功</text
+      ><text v-if="isSuccsess" class="scu-text">检测成功</text
       ><text v-else class="text">{{
-        loading ? "获取中" : "录入中"
+        loading ? "获取中" : "检测中"
       }}</text></view
     >
-
-    <div class="footer">
-      <u-button @click="rest">重新录入</u-button>
-      <u-button @click="submit" type="primary ">确认录入</u-button>
-    </div>
   </view>
 </template>
 
 <script setup lang="ts">
-import { detectLivingFace } from "@/http/api";
+import { compareFace, detectLivingFace } from "@/http/api";
 import userStore from "@/store/userStore";
 import { onMounted, ref } from "vue";
 
@@ -68,7 +63,7 @@ const done = () => {
   startEntery();
 };
 
-// 循环录入人脸
+// 循环检测人脸
 const startEntery = () => {
   setTimeout(() => {
     cameraEngine.takePhoto({
@@ -78,15 +73,9 @@ const startEntery = () => {
           filePath: tempImagePath, //选择图片返回的相对路径
           encoding: "base64", //编码格式
           success: async (res) => {
-            const data = await detectLivingFace({ imageData: res.data });
+            const data = await compareFace({ imageData: res.data });
 
-            if (!data.isfaceSuccsess) {
-              if (data.msg) {
-                uni.showToast({
-                  title: data.msg,
-                  icon: "none",
-                });
-              }
+            if (!data.isSuccsess) {
               startEntery();
               return;
             }
@@ -100,26 +89,6 @@ const startEntery = () => {
       },
     });
   }, 1000);
-};
-// 确认录入
-const submit = () => {
-  uni.uploadFile({
-    url: "http://localhost:3030/api/face/enteryFace",
-    name: "imageUrl",
-    filePath: img.value,
-    header: { Authorization: `Bearer ${user.token}` },
-    success(res) {
-      const { message } = JSON.parse(res.data) as any;
-      uni.showToast({ title: message, icon: "none" });
-    },
-  });
-};
-
-// 重新录入
-const rest = () => {
-  img.value = "";
-  isSuccsess.value = false;
-  loading.value = true;
 };
 </script>
 
