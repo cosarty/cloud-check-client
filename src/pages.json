@@ -17,6 +17,12 @@
       "style": {
         "navigationBarTitleText": "首页"
       }
+    },
+    {
+      "path": "pages/face-entery/face-entery",
+      "style": {
+        "navigationBarTitleText": "人脸录入"
+      }
     }
   ],
   "tabBar": {
@@ -48,7 +54,8 @@
   "easycom": {
     "custom": {
       "^u-(.*)": "uview-plus/components/u-$1/u-$1.vue",
-      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
+      "^com-(.*)": "@/components/$1/index.vue"
     }
   }
 }

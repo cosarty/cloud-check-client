@@ -31,22 +31,23 @@ const takePhoto = () => {
   cameraEngine.takePhoto({
     quality: "high",
     success({ tempImagePath }: any) {
+      console.log("tempImagePath: ", tempImagePath);
       img.value = tempImagePath;
-      uni.getFileSystemManager().readFile({
-        filePath: tempImagePath, //选择图片返回的相对路径
-        encoding: "base64", //编码格式
-        success: (res) => {
-          console.log("res: ", res);
-          uni.request({
-            url: "http://localhost:3030/api/face/detectLivingFace",
-            method: "POST",
-            data: { imageData: res.data },
-            success(data) {
-              console.log("data: ", data);
-            },
-          });
-        },
-      });
+      // uni.getFileSystemManager().readFile({
+      //   filePath: tempImagePath, //选择图片返回的相对路径
+      //   encoding: "base64", //编码格式
+      //   success: (res) => {
+      //     console.log("res: ", res);
+      //     uni.request({
+      //       url: "http://localhost:3030/api/face/detectLivingFace",
+      //       method: "POST",
+      //       data: { imageData: res.data },
+      //       success(data) {
+      //         console.log("data: ", data);
+      //       },
+      //     });
+      //   },
+      // });
     },
     fail(err: any) {
       console.log("err: ", err);

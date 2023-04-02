@@ -1,7 +1,6 @@
 <template>
   <div>
     首页
-
     <scroll-view
       style="height: 300px"
       scroll-y="true"
@@ -13,6 +12,7 @@
       @refresherrestore="onRestore"
     >
       {{ info }}
+      <u-button @click="entery" type="primary"> 人脸录入</u-button>
     </scroll-view>
     <u-button @click="user.logOut()" type="primary"> 退出登录</u-button>
   </div>
@@ -22,7 +22,6 @@
 import { getTaskList } from "@/http/api";
 import userStore from "@/store/userStore";
 import { onMounted, ref } from "vue";
-
 const info = ref<any>();
 const user = userStore();
 const triggered = ref(false);
@@ -41,6 +40,10 @@ const onRefresh = async () => {
 
     info.value = data[0]?.taskName;
   }
+};
+
+const entery = () => {
+  uni.navigateTo({ url: "/pages/face-entery/face-entery" });
 };
 
 const onRestore = () => {
