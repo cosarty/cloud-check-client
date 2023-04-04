@@ -34,7 +34,7 @@
     </view>
 
     <view class="tip"
-      ><text v-if="isSuccsess" class="scu-text">检测成功</text
+      ><text v-if="isSuccsess" class="scu-text">签到成功</text
       ><text v-else class="text">{{
         loading ? "获取中" : "检测中"
       }}</text></view
@@ -74,8 +74,13 @@ const startEntery = () => {
           encoding: "base64", //编码格式
           success: async (res) => {
             const data = await compareFace({ imageData: res.data });
-
             if (!data.isSuccsess) {
+              if (data.msg) {
+                uni.showToast({
+                  title: data.msg,
+                  icon: "none",
+                });
+              }
               startEntery();
               return;
             }
@@ -88,7 +93,7 @@ const startEntery = () => {
         console.log("err: ", err);
       },
     });
-  }, 1000);
+  }, 500);
 };
 </script>
 

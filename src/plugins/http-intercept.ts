@@ -30,6 +30,7 @@ const install = () => {
       return data.data;
     },
     (response) => {
+      console.log("response: ", response);
       switch (response.statusCode) {
         case 400:
           const { error } = response.data;
@@ -44,6 +45,9 @@ const install = () => {
           uni.showToast({ title: "请重新登录", icon: "none" });
           // 退出登录
           userStore().logOut();
+          break;
+        default:
+          uni.showToast({ title: "服务器错误", icon: "none" });
           break;
       }
       // 对响应错误做点什么 （statusCode !== 200）

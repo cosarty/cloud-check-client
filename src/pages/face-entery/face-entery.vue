@@ -99,7 +99,7 @@ const startEntery = () => {
         console.log("err: ", err);
       },
     });
-  }, 1000);
+  }, 800);
 };
 // 确认录入
 const submit = () => {
