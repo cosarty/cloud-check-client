@@ -16,19 +16,36 @@
     </view>
 
     <view class="login-tag">
-      <u-tabs :list="[{ name: '密码登录' }, { name: '邮箱登录' }]"></u-tabs>
+      <u-tabs
+        :activeStyle="{
+          color: '#303133',
+          fontWeight: 'bold',
+          transform: 'scale(1.05)',
+        }"
+        :list="[{ name: '密码登录' }, { name: '邮箱登录' }]"
+      ></u-tabs>
     </view>
 
     <view class="login-form">
       <u--form>
         <u-form-item>
-          <u--input placeholder="请输入内容" v-model="account.email"
+          <u--input
+            prefixIcon="account"
+            clearable
+            border="bottom"
+            placeholder="请输入内容"
+            v-model="account.email"
+            prefixIconStyle="font-size: 22px;color: #909399"
         /></u-form-item>
         <u-form-item>
           <u--input
+            prefixIcon="lock"
+            clearable
+            border="bottom"
             placeholder="请输入内容"
             type="password"
             v-model="account.password"
+            prefixIconStyle="font-size: 22px;color: #909399"
         /></u-form-item>
       </u--form>
     </view>
@@ -118,5 +135,9 @@ const submit = async () => {
   max-width: 670rpx;
   margin: 0 auto;
   margin-bottom: 50rpx;
+}
+
+.login-tag{
+  margin-bottom: 20rpx;
 }
 </style>
