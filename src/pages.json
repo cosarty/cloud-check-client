@@ -3,7 +3,8 @@
     {
       "path": "pages/login/login",
       "style": {
-        "navigationBarTitleText": "登录"
+        "navigationBarTitleText": "登录",
+        "navigationStyle":"custom"
       }
     },
     {
@@ -29,6 +30,18 @@
       "style": {
         "navigationBarTitleText": "人脸检测"
       }
+    },
+    {
+      "path": "pages/timetable/timetable",
+      "style": {
+        "navigationBarTitleText": "课表"
+      }
+    },
+    {
+      "path": "pages/class-info/class-info",
+      "style": {
+        "navigationBarTitleText": "班级"
+      }
     }
   ],
   "tabBar": {
@@ -41,6 +54,18 @@
         "selectedIconPath": "./static/tabbar/schedule-icon.png",
         "iconPath": "./static/tabbar/schedule-icon2.png",
         "pagePath": "pages/schedule/schedule"
+      },
+      {
+        "text": "课表",
+        "selectedIconPath": "./static/tabbar/schedule-icon.png",
+        "iconPath": "./static/tabbar/schedule-icon2.png",
+        "pagePath": "pages/timetable/timetable"
+      },
+      {
+        "text": "班级",
+        "selectedIconPath": "./static/tabbar/schedule-icon.png",
+        "iconPath": "./static/tabbar/schedule-icon2.png",
+        "pagePath": "pages/class-info/class-info"
       },
       {
         "text": "个人",
@@ -56,7 +81,6 @@
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   },
-
   "easycom": {
     "custom": {
       "^u-(.*)": "uview-plus/components/u-$1/u-$1.vue",
