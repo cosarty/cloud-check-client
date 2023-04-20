@@ -4,7 +4,7 @@
       "path": "pages/login/login",
       "style": {
         "navigationBarTitleText": "登录",
-        "navigationStyle":"custom"
+        "navigationStyle": "custom"
       }
     },
     {
@@ -17,7 +17,7 @@
       "path": "pages/schedule/schedule",
       "style": {
         "navigationBarTitleText": "首页",
-        "navigationStyle":"custom"
+        "navigationStyle": "custom"
       }
     },
     {
@@ -29,7 +29,7 @@
     {
       "path": "pages/compare-face/compare-face",
       "style": {
-        "navigationBarTitleText": "人脸检测"
+        "navigationBarTitleText": "签到"
       }
     },
     {

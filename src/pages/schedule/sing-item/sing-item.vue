@@ -13,9 +13,10 @@
 
       <view class="action-box">
         <view class="time">{{ dayjs(singTaks.taskTime).format('HH:mm') }}</view>
-        <view class="tag" :style="acBg">{{
+        <view class="tag" :style="acBg" v-if="!isCall">{{
           singTaks.isRun ? '签到中' : '等待签到'
         }}</view>
+        <view v-else> 已签到</view>
       </view>
     </view>
   </view>
@@ -24,7 +25,14 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
 import { CSSProperties, computed } from 'vue'
+
+import userStore from '@/store/userStore'
+const user = userStore()
 const props = defineProps<{ singTaks: any }>()
+
+const isCall = computed(() =>
+  props.singTaks.students.find((s) => s.userId === user.userInfo.userId)
+)
 
 const acBg = computed<CSSProperties>(() =>
   props.singTaks.isRun
@@ -32,13 +40,32 @@ const acBg = computed<CSSProperties>(() =>
     : { backgroundColor: '#fac327' }
 )
 
+const emit = defineEmits<{ (e: 'close'): void }>()
+
 const itemClickHandle = () => {
   if (!props.singTaks.isRun) {
-    uni.showToast({title:'签到未开始',icon:'none'})
-    return 
+    uni.showToast({ title: '签到未开始', icon: 'none' })
+    return
   }
 
-  uni.navigateTo({ url: '/pages/compare-face/compare-face' })
+  if (
+    !dayjs(props.singTaks.taskTime)
+      .add(props.singTaks.integral, 'second')
+      .isAfter(dayjs())
+  ) {
+    emit('close')
+
+    uni.showToast({
+      title: '签到已结束.',
+      icon: 'none',
+    })
+    return
+  }
+  uni.navigateTo({
+    url:
+      '/pages/compare-face/compare-face?info=' +
+      encodeURIComponent(JSON.stringify({ ...props.singTaks })),
+  })
 }
 </script>
 

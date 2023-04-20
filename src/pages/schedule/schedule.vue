@@ -12,7 +12,7 @@
       @refresherrestore="onRestore"
     >
       <view class="item" v-for="info in sintInfo" :key="info.singTaskId">
-        <singItem :sing-taks="info"
+        <singItem :sing-taks="info" @close="closeInfo(info)"
       /></view>
     </scroll-view>
   </view>
@@ -38,6 +38,7 @@ import userStore from '@/store/userStore'
 import { computed, getCurrentInstance, nextTick, onMounted, ref } from 'vue'
 import RrangeDate from './range-date/index.vue'
 import singItem from './sing-item/sing-item.vue'
+import { onShow } from '@dcloudio/uni-app'
 
 const proxy = getCurrentInstance()?.proxy
 const user = userStore()
@@ -53,6 +54,10 @@ const onRefresh = () => {
     triggered.value = false
   })
 }
+
+onShow(() => {
+  getDate(selectDate.value)
+})
 
 // 获取时间
 const getDate = async (date: string) => {
@@ -74,7 +79,12 @@ onMounted(() => {
 const onRestore = () => {
   triggered.value = 'restore' // 需要重置
 }
-
+// 删除过期
+const closeInfo = (info: any) => {
+  sintInfo.value = sintInfo.value.filter(
+    (s) => s.singTaskId !== info.singTaskId
+  )
+}
 const entery = () => {
   uni.navigateTo({ url: '/pages/face-entery/face-entery' })
 }

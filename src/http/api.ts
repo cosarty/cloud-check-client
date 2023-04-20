@@ -16,3 +16,5 @@ export const compareFace = (params: any) =>
   http.post(`/face/compareFace`, params)
 export const getCurrentDay = (params: any) =>
   http.post(`/singTask/getCurrentDay`, params)
+export const createStat = (params: any) =>
+  http.post(`/statinfo/create`, params)

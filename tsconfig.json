@@ -14,7 +14,7 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "lib": ["esnext", "dom"],
-    "types": ["@dcloudio/types", "vite/client"],
+    "types": ["@dcloudio/types", "vite/client","@types/node"],
     "paths": {
       "@/*":["./src/*"]
     }
