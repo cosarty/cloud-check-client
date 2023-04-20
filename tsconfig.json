@@ -12,6 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "useDefineForClassFields": true,
     "resolveJsonModule": true,
+    "allowJs": true,
     "lib": ["esnext", "dom"],
     "types": ["@dcloudio/types", "vite/client"],
     "paths": {

@@ -5,6 +5,8 @@ import { onMounted, ref } from "vue";
 const userStore = defineStore("user", () => {
   const token = ref<string>("");
   const userInfo = ref<any>();
+
+  const selectDate = ref<any>('')
   const regLogin = async (param: any) => {
     const data = await login({ ...param });
     token.value = data.token;
@@ -38,7 +40,11 @@ const userStore = defineStore("user", () => {
     }, 500);
   };
 
-  return { token, regLogin, logOut, getCurrentUser, setToken, userInfo };
+  const setSlectDate = (data: any) => {
+    if (!data) return 
+    selectDate.value = data
+  }
+  return { token, regLogin, logOut, getCurrentUser, setToken, userInfo,setSlectDate,selectDate };
 });
 
 export default userStore;

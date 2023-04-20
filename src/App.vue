@@ -16,6 +16,6 @@ export default {
 /*每个页面公共css */
 
 page {
-  /* background: #ccc; */
+  background: #f8f6f9;
 }
 </style>
