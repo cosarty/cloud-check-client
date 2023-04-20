@@ -1,10 +1,18 @@
 import { getCurrent, login } from "@/http/api";
 import { defineStore } from "pinia";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const userStore = defineStore("user", () => {
   const token = ref<string>("");
   const userInfo = ref<any>();
+  const auth = computed<any>(() => {
+    const auth: string[] = []
+    if (userInfo.value.isAdmin) auth.push('admin')
+    if (userInfo.value.super) return ['super']
+    if (['teacher', 'student'].includes(userInfo.value.auth))
+      auth.push(userInfo.value.auth)
+    return auth
+  })
 
   const selectDate = ref<any>('')
   const regLogin = async (param: any) => {
@@ -44,7 +52,7 @@ const userStore = defineStore("user", () => {
     if (!data) return 
     selectDate.value = data
   }
-  return { token, regLogin, logOut, getCurrentUser, setToken, userInfo,setSlectDate,selectDate };
+  return { token, regLogin, logOut, getCurrentUser, setToken, userInfo,setSlectDate,selectDate,auth };
 });
 
 export default userStore;

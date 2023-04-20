@@ -11,6 +11,7 @@
       @refresherrefresh="onRefresh"
       @refresherrestore="onRestore"
     >
+ 
       <view class="item" v-for="info in sintInfo" :key="info.singTaskId">
         <singItem :sing-taks="info" @close="closeInfo(info)"
       /></view>

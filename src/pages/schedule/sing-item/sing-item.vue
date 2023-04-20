@@ -13,7 +13,19 @@
 
       <view class="action-box">
         <view class="time">{{ dayjs(singTaks.taskTime).format('HH:mm') }}</view>
-        <view class="tag" :style="acBg" v-if="!isCall">{{
+
+        <view
+          v-if="
+            dayjs().isAfter(
+              dayjs(singTaks.taskTime).add(singTaks.integral, 'second')
+            )
+          "
+          class="tag"
+          :style="{ backgroundColor: '#f56c6c' }"
+        >
+          已结束</view
+        >
+        <view class="tag" :style="acBg" v-else-if="!isCall">{{
           singTaks.isRun ? '签到中' : '等待签到'
         }}</view>
         <view v-else> 已签到</view>
@@ -31,9 +43,9 @@ const user = userStore()
 const props = defineProps<{ singTaks: any }>()
 
 const isCall = computed(() =>
-  props.singTaks.students.find((s) => s.userId === user.userInfo.userId)
+  props.singTaks.students.find((s) => s.userId === user?.userInfo?.userId)
 )
-
+//    <!-- f56c6c -->
 const acBg = computed<CSSProperties>(() =>
   props.singTaks.isRun
     ? { backgroundColor: '#5acf80' }

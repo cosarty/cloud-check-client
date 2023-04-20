@@ -1,4 +1,6 @@
 <template>
+
+
   <view class="entery-box">
     <template v-if="!isSuccsess">
       <template v-if="action.includes('location') && !action.includes('face')">
