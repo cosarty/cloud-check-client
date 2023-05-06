@@ -13,7 +13,7 @@
     />
 
     <view
-      ><text>姓名</text><text>{{ user?.userInfo?.userName }}</text></view
+      ><text>姓名：</text><text>{{ user?.userInfo?.userName }}</text></view
     >
 
     <view
@@ -34,21 +34,18 @@
     >
 
     <view
-      ><text>邮箱</text><text>{{ user?.userInfo?.email }}</text></view
+      ><text>邮箱：</text><text>{{ user?.userInfo?.email }}</text></view
     >
-
-  
-
     <view>
       <text>身份：</text>
       <u-tag
-        v-for="au in user?.auth"
+        v-for="au in user?.auth ?? []"
         :key="au"
         :text="AuthEnum?.[au]"
         type="success"
       ></u-tag>
     </view>
-    <view v-if="user?.auth?.includes('student')"
+    <view v-if="user?.auth?.includes?.('student')"
       ><text>人脸：</text
       ><text>{{ user?.userInfo?.face ? '已录入' : '未录入' }}</text></view
     >
@@ -61,7 +58,7 @@ import { onLoad } from '@dcloudio/uni-app'
 import userStore from '@/store/userStore'
 import { AuthEnum } from '@/util/AuthEnum'
 const user = userStore()
-onLoad(() => {})
+
 </script>
 
 <style scoped lang="scss">

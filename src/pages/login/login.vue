@@ -22,7 +22,7 @@
           fontWeight: 'bold',
           transform: 'scale(1.05)',
         }"
-        :list="[{ name: '密码登录' }, { name: '邮箱登录' }]"
+        :list="[{ name: '密码登录' }]"
       ></u-tabs>
     </view>
 
@@ -63,8 +63,8 @@ import userStore from '@/store/userStore'
 
 const user = userStore()
 const account = reactive({
-  email: '414359193@qq.com',
-  password: 'aA123456789',
+  email: '12345@qq.com',
+  password: 'aA12345678',
 })
 onLoad(() => {
   // 自动登录

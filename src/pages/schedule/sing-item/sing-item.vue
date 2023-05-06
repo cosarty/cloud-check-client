@@ -55,8 +55,12 @@ const acBg = computed<CSSProperties>(() =>
 const emit = defineEmits<{ (e: 'close'): void }>()
 
 const itemClickHandle = () => {
-  if (!props.singTaks.isRun) {
+  if (!props.singTaks.isRun && !props.singTaks.isEnd) {
     uni.showToast({ title: '签到未开始', icon: 'none' })
+    return
+  }
+  if (props.singTaks.isEnd) {
+    uni.showToast({ title: '签到已结束', icon: 'none' })
     return
   }
 

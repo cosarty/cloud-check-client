@@ -7,10 +7,10 @@ const userStore = defineStore("user", () => {
   const userInfo = ref<any>();
   const auth = computed<any>(() => {
     const auth: string[] = []
-    if (userInfo.value.isAdmin) auth.push('admin')
-    if (userInfo.value.super) return ['super']
-    if (['teacher', 'student'].includes(userInfo.value.auth))
-      auth.push(userInfo.value.auth)
+    if (userInfo.value?.isAdmin) auth.push('admin')
+    if (userInfo.value?.super) return ['super']
+    if (['teacher', 'student'].includes(userInfo.value?.auth))
+      auth.push(userInfo.value?.auth)
     return auth
   })
 

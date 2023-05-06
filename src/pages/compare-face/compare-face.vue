@@ -1,63 +1,52 @@
 <template>
-
-
   <view class="entery-box">
     <template v-if="!isSuccsess">
       <template v-if="action.includes('location') && !action.includes('face')">
         <view class="call-button" :class="{ disable: !isPass }" @click="submit">
-          {{ isPass ? '签到打卡' : '当前不在签到范围内' }}</view
-        >
+          {{ isPass ? '签到打卡' : '当前不在签到范围内' }}</view>
       </template>
 
-      <template v-if="action.includes('face')">
-        <view
-          v-if="action.includes('location') && !isPass"
-          class="call-button disable"
-        >
-          当前不在签到范围内</view
-        >
+      <template v-if="action.includes('face') && isFace && false">
+        <view v-if="action.includes('location') && !isPass" class="call-button disable">
+          当前不在签到范围内</view>
         <template v-else>
           <view class="camera-box">
-            <camera
-              v-if="!isSuccsess"
-              class="camera"
-              mode="normal"
-              device-position="front"
-              flash="auto"
-              @initdone="done"
-            />
+            <camera v-if="!isSuccsess" class="camera" mode="normal" device-position="front" flash="auto"
+              @initdone="done" />
 
             <view v-else class="img-box">
-              <image
-                src="@/static/entery-succsess.png"
-                mode="scaleToFill"
-                style="z-index: 3; width: 200rpx; height: 200rpx"
-              />
-              <image
-                :src="img"
-                mode="scaleToFill"
-                style="z-index: 1; filter: blur(15rpx)"
-              />
+              <image src="@/static/entery-succsess.png" mode="scaleToFill"
+                style="z-index: 3; width: 200rpx; height: 200rpx" />
+              <image :src="img" mode="scaleToFill" style="z-index: 1; filter: blur(15rpx)" />
             </view>
-            <com-loading
-              v-if="loading"
-              style="
+            <com-loading v-if="loading" style="
                 position: absolute;
                 left: 50%;
                 top: 30%;
                 transform: translate(-50%, -50%);
-              "
-            ></com-loading>
+              "></com-loading>
           </view>
 
-          <view class="tip"
-            ><text v-if="isSuccsess" class="scu-text">签到成功</text
-            ><text v-else class="text">{{
-              loading ? '获取中' : '检测中'
-            }}</text></view
-          >
+          <view class="tip"><text v-if="isSuccsess" class="scu-text">签到成功</text><text v-else class="text">{{
+            loading ? '获取中' : '检测中'
+          }}</text></view>
         </template>
       </template>
+
+      <template v-if="action.includes('face') && isFace">
+        <u-popup :show="true" :round="10" mode="center">
+          <view
+            style="width: 500rpx;height: 300rpx;padding:0 20rpx 20rpx;display: flex;justify-content: center;flex-direction: column;">
+            <text>您还未录入人脸请先录入人脸，再进行签到</text>
+            <view style="display: flex; justify-content: space-around;margin-top: 30rpx;">
+              <u-button text="取消" type="warning" style="width: 150rpx;" @click="cancel
+"></u-button>
+              <u-button type="primary" text="确定" style="width: 150rpx;"></u-button>
+            </view>
+          </view>
+        </u-popup>
+      </template>
+
       <template v-if="!action.length">
         <view class="call-button" @click="submit"> 签到打卡</view>
       </template>
@@ -73,6 +62,7 @@ import { compareFace, createStat } from '@/http/api'
 import userStore from '@/store/userStore'
 import { onLoad } from '@dcloudio/uni-app'
 import { computed, onMounted, ref, watch } from 'vue'
+import dayjs from 'dayjs'
 const user = userStore()
 let cameraEngine: any
 const img = ref('')
@@ -81,36 +71,46 @@ const loading = ref(true)
 const isSuccsess = ref(false)
 const data = ref<any>({})
 
+const isFace = computed(() => user?.userInfo?.face)
+
 const isPass = ref<any>(false)
 
 // 获取位置的时候转圈
 
 onLoad(({ info }) => {
+
+
   info = JSON.parse(decodeURIComponent(info))
   data.value = info
+  if (info.sustain) {
+    uni.getLocation({
+      type: 'gcj02', // 使用国标坐标系
+      isHighAccuracy: true, // 高精度定位，会调用gps获取高精度坐标
+      success: (res) => {
+        const { latitude, longitude } = res
+        if (info.area || info.location) {
+          const location = info.location ?? info.area?.location
+          if (location) {
+            const l = JSON.parse(location)
 
-
-  uni.getLocation({
-    type: 'gcj02', // 使用国标坐标系
-    isHighAccuracy: true, // 高精度定位，会调用gps获取高精度坐标
-    success: (res) => {
-      const { latitude, longitude } = res
-      if (info.area || info.location) {
-        const location = info.location ?? info.area?.location
-        if (location) {
-          const l = JSON.parse(location)
-
-          if (
-            getDistance(latitude, longitude, l.lat, l.lng).toFixed(2) <=
-            info.sustain
-          ) {
-            isPass.value = true
+            if (
+              getDistance(latitude, longitude, l.lat, l.lng).toFixed(2) <=
+              info.sustain
+            ) {
+              isPass.value = true
+            }
           }
         }
-      }
-    },
-  })
+      },
+    })
+  }
+
 })
+
+const cancel = () => {
+  uni.navigateBack()
+}
+
 
 const getDistance = (la1, lo1, la2, lo2) => {
   // 当前的纬度，当前的经度，接口拿到的纬度，接口拿到的经度
@@ -123,7 +123,7 @@ const getDistance = (la1, lo1, la2, lo2) => {
     Math.asin(
       Math.sqrt(
         Math.pow(Math.sin(La3 / 2), 2) +
-          Math.cos(La1) * Math.cos(La2) * Math.pow(Math.sin(Lb3 / 2), 2)
+        Math.cos(La1) * Math.cos(La2) * Math.pow(Math.sin(Lb3 / 2), 2)
       )
     )
   distance = distance * 6378.137
@@ -153,6 +153,9 @@ const done = () => {
   startEntery()
 }
 
+
+
+
 // 循环检测人脸
 const startEntery = () => {
   setTimeout(() => {
@@ -176,6 +179,14 @@ const startEntery = () => {
             }
             isSuccsess.value = true
             img.value = tempImagePath
+            await createStat({
+              // location: JSON.stringify(location),
+              // locationName,
+              singTaskId: data.value.singTaskId,
+              type: 1,
+              classScheduleId: data.value.singTclassScheduleIdaskId,
+              sustain: data.value.sustain,
+            })
           },
         })
       },
@@ -186,27 +197,35 @@ const startEntery = () => {
   }, 500)
 }
 
-watch(isSuccsess, async (ns) => {
-  await createStat({
-    // location: JSON.stringify(location),
-    // locationName,
-    singTaskId: data.value.singTaskId,
-    type: 1,
-    classScheduleId: data.value.singTclassScheduleIdaskId,
-    sustain: data.value.sustain,
-  })
 
-  isSuccsess.value = true
-})
 
 const submit = async () => {
-  await createStat({
-    singTaskId: data.value.singTaskId,
-    type: 1,
-    classScheduleId: data.value.singTclassScheduleIdaskId,
-    sustain: data.value.sustain,
-  })
-  isSuccsess.value = true
+  const { taskTime, integral } = data.value
+
+  if (dayjs(taskTime).add(integral, 'second').isAfter(new Date())) {
+    await createStat({
+      singTaskId: data.value.singTaskId,
+      type: 1,
+      classScheduleId: data.value.singTclassScheduleIdaskId,
+      sustain: data.value.sustain,
+    })
+    isSuccsess.value = true
+  } else {
+    uni.showToast({
+      title: '签到时间过期',
+      icon: 'none',
+      duration: 1000,
+
+    })
+    setTimeout(() => {
+      uni.navigateBack()
+    }, 1000)
+
+  }
+
+
+
+
 }
 </script>
 
@@ -246,6 +265,7 @@ const submit = async () => {
   justify-content: center;
   flex-direction: column;
 }
+
 .footer {
   display: flex;
   gap: 30rpx;
@@ -267,6 +287,7 @@ const submit = async () => {
   margin: 0 auto 50rpx;
   position: relative;
 }
+
 .camera {
   width: 500rpx;
   height: 500rpx;
@@ -278,6 +299,7 @@ const submit = async () => {
   margin-bottom: 30px;
   text-align: center;
 }
+
 .tip .text {
   padding: 10rpx 70rpx;
   outline: none;
@@ -298,6 +320,7 @@ const submit = async () => {
 
   position: relative;
 }
+
 .img-box image {
   width: inherit;
   height: inherit;

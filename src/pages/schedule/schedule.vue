@@ -11,26 +11,19 @@
       @refresherrefresh="onRefresh"
       @refresherrestore="onRestore"
     >
- 
-      <view class="item" v-for="info in sintInfo" :key="info.singTaskId">
+   
+      <view v-if="sintInfo?.length" class="item" v-for="info in sintInfo" :key="info.singTaskId">
         <singItem :sing-taks="info" @close="closeInfo(info)"
       /></view>
+      <view v-else class="empty">
+        <image src="@/static/empty_schdule.png" style="width: 200rpx; height: 200rpx;margin-top: 30rpx;"></image>
+            暂无活动
+      </view>
     </scroll-view>
+    <view class="circle" v-if="isTeacher">
+        <u-icon name="plus" :size="25"></u-icon>
+      </view>
   </view>
-  <!-- <scroll-view
-      style="height: 300px"
-      scroll-y="true"
-      refresher-enabled="true"
-      :refresher-triggered="triggered"
-      :refresher-threshold="100"
-      refresher-background="lightgreen"
-      @refresherrefresh="onRefresh"
-      @refresherrestore="onRestore"
-    >
-      {{ info }}
-      <u-button @click="entery" type="primary"> 人脸录入</u-button>
-      <u-button @click="compara" type="primary"> 人脸检测</u-button>
-    </scroll-view> -->
 </template>
 
 <script setup lang="ts">
@@ -44,7 +37,7 @@ import { onShow } from '@dcloudio/uni-app'
 const proxy = getCurrentInstance()?.proxy
 const user = userStore()
 const triggered = ref<any>(false)
-
+const isTeacher = computed(()=>user?.auth?.includes?.('teacher'))
 const sintInfo = ref([])
 
 const metListHeight = ref(0)
@@ -128,9 +121,25 @@ const compara = () => {
   }
 }
 
+.empty{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
 .item {
   &:not(:last-of-type) {
     margin-bottom: 30rpx;
   }
+}
+
+.circle{
+  border-radius: 100%;
+  padding: 30rpx;
+  position:  fixed;
+  right: 30rpx;
+  bottom: 60rpx;
+  background-color: #89a1d2;
 }
 </style>

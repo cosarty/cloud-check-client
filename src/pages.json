@@ -31,19 +31,8 @@
       "style": {
         "navigationBarTitleText": "签到"
       }
-    },
-    {
-      "path": "pages/timetable/timetable",
-      "style": {
-        "navigationBarTitleText": "课表"
-      }
-    },
-    {
-      "path": "pages/class-info/class-info",
-      "style": {
-        "navigationBarTitleText": "班级"
-      }
     }
+
   ],
   "tabBar": {
     "color": "#ccc",
@@ -55,18 +44,6 @@
         "selectedIconPath": "./static/tabbar/schedule-icon.png",
         "iconPath": "./static/tabbar/schedule-icon2.png",
         "pagePath": "pages/schedule/schedule"
-      },
-      {
-        "text": "课表",
-        "selectedIconPath": "./static/tabbar/schedule-icon.png",
-        "iconPath": "./static/tabbar/schedule-icon2.png",
-        "pagePath": "pages/timetable/timetable"
-      },
-      {
-        "text": "班级",
-        "selectedIconPath": "./static/tabbar/schedule-icon.png",
-        "iconPath": "./static/tabbar/schedule-icon2.png",
-        "pagePath": "pages/class-info/class-info"
       },
       {
         "text": "个人",

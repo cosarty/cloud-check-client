@@ -1,44 +1,23 @@
 <template>
   <view class="entery-box">
     <view class="camera-box">
-      <camera
-        v-if="!isSuccsess"
-        class="camera"
-        mode="normal"
-        device-position="front"
-        flash="auto"
-        @initdone="done"
-      />
+      <camera v-if="!isSuccsess" class="camera" mode="normal" device-position="front" flash="auto" @initdone="done" />
 
       <view v-else class="img-box">
-        <image
-          src="@/static/entery-succsess.png"
-          mode="scaleToFill"
-          style="z-index: 3; width: 200rpx; height: 200rpx"
-        />
-        <image
-          :src="img"
-          mode="scaleToFill"
-          style="z-index: 1; filter: blur(15rpx)"
-        />
+        <image src="@/static/entery-succsess.png" mode="scaleToFill" style="z-index: 3; width: 200rpx; height: 200rpx" />
+        <image :src="img" mode="scaleToFill" style="z-index: 1; filter: blur(15rpx)" />
       </view>
-      <com-loading
-        v-if="loading"
-        style="
+      <com-loading v-if="loading" style="
           position: absolute;
           left: 50%;
           top: 30%;
           transform: translate(-50%, -50%);
-        "
-      ></com-loading>
+        "></com-loading>
     </view>
 
-    <view class="tip"
-      ><text v-if="isSuccsess" class="scu-text">获取成功</text
-      ><text v-else class="text">{{
-        loading ? "获取中" : "录入中"
-      }}</text></view
-    >
+    <view class="tip"><text v-if="isSuccsess" class="scu-text">获取成功</text><text v-else class="text">{{
+      loading ? "获取中" : "录入中"
+    }}</text></view>
 
     <div class="footer">
       <u-button @click="rest">重新录入</u-button>
@@ -111,6 +90,10 @@ const submit = () => {
     success(res) {
       const { message } = JSON.parse(res.data) as any;
       uni.showToast({ title: message, icon: "none" });
+
+      user.getCurrentUser().then(() => {
+        uni.navigateBack()
+      })
     },
   });
 };
@@ -132,6 +115,7 @@ const rest = () => {
   box-shadow: 0px 0px 30px #bbb9b9;
   overflow: hidden;
 }
+
 .footer {
   display: flex;
   gap: 30rpx;
@@ -153,6 +137,7 @@ const rest = () => {
   margin: 90rpx auto 50rpx;
   position: relative;
 }
+
 .camera {
   width: 500rpx;
   height: 500rpx;
@@ -164,6 +149,7 @@ const rest = () => {
   margin-bottom: 30px;
   text-align: center;
 }
+
 .tip .text {
   padding: 10rpx 70rpx;
   outline: none;
@@ -184,6 +170,7 @@ const rest = () => {
 
   position: relative;
 }
+
 .img-box image {
   width: inherit;
   height: inherit;
