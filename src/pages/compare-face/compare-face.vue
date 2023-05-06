@@ -6,7 +6,7 @@
           {{ isPass ? '签到打卡' : '当前不在签到范围内' }}</view>
       </template>
 
-      <template v-if="action.includes('face') && isFace && false">
+      <template v-if="action.includes('face') && isFace">
         <view v-if="action.includes('location') && !isPass" class="call-button disable">
           当前不在签到范围内</view>
         <template v-else>
@@ -33,15 +33,15 @@
         </template>
       </template>
 
-      <template v-if="action.includes('face') && isFace">
+      <template v-if="action.includes('face') && !isFace">
         <u-popup :show="true" :round="10" mode="center">
           <view
             style="width: 500rpx;height: 300rpx;padding:0 20rpx 20rpx;display: flex;justify-content: center;flex-direction: column;">
             <text>您还未录入人脸请先录入人脸，再进行签到</text>
             <view style="display: flex; justify-content: space-around;margin-top: 30rpx;">
               <u-button text="取消" type="warning" style="width: 150rpx;" @click="cancel
-"></u-button>
-              <u-button type="primary" text="确定" style="width: 150rpx;"></u-button>
+                "></u-button>
+              <u-button type="primary" text="确定" style="width: 150rpx;" @click="entry"></u-button>
             </view>
           </view>
         </u-popup>
@@ -153,7 +153,9 @@ const done = () => {
   startEntery()
 }
 
-
+const entry = () => {
+  uni.navigateTo({ url: '/pages/face-entery/face-entery' })
+}
 
 
 // 循环检测人脸
@@ -179,14 +181,11 @@ const startEntery = () => {
             }
             isSuccsess.value = true
             img.value = tempImagePath
-            await createStat({
-              // location: JSON.stringify(location),
-              // locationName,
-              singTaskId: data.value.singTaskId,
-              type: 1,
-              classScheduleId: data.value.singTclassScheduleIdaskId,
-              sustain: data.value.sustain,
-            })
+
+
+
+
+
           },
         })
       },
@@ -197,18 +196,25 @@ const startEntery = () => {
   }, 500)
 }
 
-
-
-const submit = async () => {
-  const { taskTime, integral } = data.value
-
-  if (dayjs(taskTime).add(integral, 'second').isAfter(new Date())) {
+watch(isSuccsess, async () => {
+  if (isSuccsess.value) {
     await createStat({
+      // location: JSON.stringify(location),
+      // locationName,
       singTaskId: data.value.singTaskId,
       type: 1,
       classScheduleId: data.value.singTclassScheduleIdaskId,
       sustain: data.value.sustain,
     })
+  }
+
+})
+
+const submit = async () => {
+  const { taskTime, integral } = data.value
+
+  if (dayjs(taskTime).add(integral, 'second').isAfter(new Date())) {
+
     isSuccsess.value = true
   } else {
     uni.showToast({

@@ -18,15 +18,15 @@
           v-if="
             dayjs().isAfter(
               dayjs(singTaks.taskTime).add(singTaks.integral, 'second')
-            )
+            )||singTaks.isEnd
           "
           class="tag"
           :style="{ backgroundColor: '#f56c6c' }"
         >
           已结束</view
         >
-        <view class="tag" :style="acBg" v-else-if="!isCall">{{
-          singTaks.isRun ? '签到中' : '等待签到'
+        <view class="tag" :style="acBg" v-else-if="!isCall ">{{
+          singTaks.isRun? '签到中' : '等待签到'
         }}</view>
         <view v-else> 已签到</view>
       </view>
